@@ -1,1 +1,1 @@
-# View-Materialization-Alternatives-in-Property-Graph-Databases
+# View Materialization Techniques in Graph Databases
