@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -26,6 +29,15 @@ public class NTriplesExtractor {
     //Method to extract all labels from a file
     public void transform(String path){
         File root = new File(path);
+
+        try {
+            Path dir = Paths.get(path+"/target/");
+            //java.nio.file.Files;
+            Files.createDirectories(dir);
+        } catch (IOException e) {
+            System.out.println("Target already exists. Rewriting results");
+        }
+
         int count=0;
 
         for (File ntfile : Objects.requireNonNull(root.listFiles())) {

@@ -18,8 +18,8 @@ public class WorkflowManager {
             NTriplesExtractor extractor = new NTriplesExtractor();
             extractor.getLsqQueries(args[1],args[2]);
         }
-        else if(args.length == 2 && args[0].equals("standard")){
-            int batches = Integer.parseInt(args[0]);
+        else if(args.length == 3 && args[0].equals("standard")){
+            int batches = Integer.parseInt(args[2]);
             String path = args[1];
 
             EntityLoader entityLoader = new EntityLoader();

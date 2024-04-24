@@ -1,6 +1,9 @@
 package gr.uoa.di.NTriples;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +32,15 @@ public class EntityLoader {
 
     //Method to export the uris in csv format into a given directory
     public void export(String path){
+
+        try {
+            Path dir = Paths.get(path+"/target/");
+            //java.nio.file.Files;
+            Files.createDirectories(dir);
+        } catch (IOException e) {
+            System.out.println("Target already exists. Rewriting results");
+        }
+
         path += "/target/uris.csv";
         BufferedWriter writer = null;
         try {

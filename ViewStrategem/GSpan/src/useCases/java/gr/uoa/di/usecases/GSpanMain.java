@@ -18,9 +18,25 @@ class GSpanMain { // NO_UCD (unused code)
 	///////////////
 
 	public static void main(String[] args) throws Exception, IOException {
-		viewSelection(DBPediaPrimordialConstants.create("tmp/", 500));
-		viewSelection(LSQPrimordialConstants.create("lsq-tmp/", 150));
-		viewSelection(ColoursPrimordialConstants.create("colours-tmp/", 100));
+		if(args.length==2 && args[0].equals("views")){
+			if(args[1].equals("dbpedia"))
+				viewSelection(DBPediaPrimordialConstants.create("tmp/", 500));
+			if(args[1].equals("bio2rdf"))
+				viewSelection(LSQPrimordialConstants.create("lsq-tmp/", 150));
+			if(args[1].equals("colours"))
+				viewSelection(ColoursPrimordialConstants.create("colours-tmp/", 100));
+		}
+		else if(args.length==2 && args[0].equals("clean")){
+			if(args[1].equals("dbpedia"))
+				deleteViews(DBPediaPrimordialConstants.create("tmp/", 500));
+			if(args[1].equals("bio2rdf"))
+				deleteViews(LSQPrimordialConstants.create("lsq-tmp/", 150));
+			if(args[1].equals("colours"))
+				deleteViews(ColoursPrimordialConstants.create("colours-tmp/", 100));
+		}
+		else{
+			System.err.println("Incorrect arguments\n");
+		}
 	}
 
 	static <C extends Constants & ConstantForExperiments> void viewSelection(C constants)
@@ -48,17 +64,15 @@ class GSpanMain { // NO_UCD (unused code)
 
 		//
 		//
-		//Step_MaterializePatterns.materializePatterns(constants);
+		Step_MaterializePatterns.materializePatterns(constants);
 		//
 
 		Step3_IndexSelection.selectViews(constants, tolerancePercentage);
 	}
 
-	static void deleteDirectory(String dir) {
-		File directory = new File(dir);
-		File[] files = directory.listFiles();
-		for (File file : files)
-			file.delete();
+	static <C extends Constants & ConstantForExperiments> void deleteViews(C constants)
+			throws Exception, IOException {
+		Step_DeleteViews.deleteViews(constants);
 	}
 
 }
